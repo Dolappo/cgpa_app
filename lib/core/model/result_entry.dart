@@ -54,7 +54,7 @@ class ResultEntry {
 
 
 
-enum Grade { a, b, c, d, f }
+enum Grade { a, b, c, d, f, g }
 
 extension on Grade {
   toEString() {
