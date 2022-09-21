@@ -21,7 +21,7 @@ void onChangeCourseUnit(int index, value){
   notifyListeners();
 }
 void onChangeScore(int index, value){
-  print('course score: $value');
+  print('course scores: $value');
   _studentEntries[index].score = double.parse(value);
   notifyListeners();
 }
