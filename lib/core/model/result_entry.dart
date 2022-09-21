@@ -32,8 +32,8 @@ class ResultEntry {
         'grade': grade,
       };
 
-  Grade get scoreGrade {
-    if (score! > 70 && score! < 100) {
+  String get scoreGrade {
+    if (score! > 70 && score! <= 100) {
       return Grade.a.toEString();
   }
     else if(score! > 60 && score! < 70){
