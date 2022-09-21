@@ -16,7 +16,7 @@ void onChangeCourseName(int index, value){
   notifyListeners();
 }
 void onChangeCourseUnit(int index, value){
-  print('course unit: $value');
+  print('courses unit: $value');
   _studentEntries[index].courseUnit = int.parse(value);
   notifyListeners();
 }
