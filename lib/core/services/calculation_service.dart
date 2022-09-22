@@ -23,6 +23,18 @@ void calculateTotalLoadUnit(){
   }).toList();
 }
 
+double getGpa(){
+  double gpa = totalLoadUnit/totalCourseUnit;
+  return gpa;
+}
+double calcGPA(){
+  calculateTotalCourseUnit();
+  checkGrade();
+  calculateTotalLoadUnit();
+  double gpa = getGpa();
+  return gpa;
+}
+
 void checkGrade(){
   entries.map((e) {
     if(e.scoreGrade=='A'){

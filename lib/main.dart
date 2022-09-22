@@ -1,5 +1,6 @@
 import 'package:cgpa_app/app/app_setup.locator.dart';
 import 'package:cgpa_app/ui/screens/entry/result_entry_screen.dart';
+import 'package:cgpa_app/ui/widgets/result_entry_card.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const ResultEntryScreen()
+      home: const ShowBoxesScreen()
     );
   }
 }

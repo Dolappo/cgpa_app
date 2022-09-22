@@ -19,13 +19,13 @@ class CTextField extends StatelessWidget {
       child: TextField(
         textAlign: TextAlign.start,
         decoration: InputDecoration(
-          focusedBorder: InputBorder.none,
+          focusedBorder: const OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.grey)
+          ),
           border: OutlineInputBorder(
-            borderSide: BorderSide.none,
+            borderSide: const BorderSide(color: Colors.grey),
             borderRadius: BorderRadius.circular(10),
           ),
-          fillColor: Colors.blueGrey.shade200,
-          filled: true,
           hintText: hintText,
         ),
         controller: controller,

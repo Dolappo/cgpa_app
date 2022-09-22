@@ -19,7 +19,18 @@ class PreviewEntryScreen extends StatelessWidget {
             children: [
               Column(
                 children: List.generate(model.entry.length, (index) => ResultEntryCard(isPreview: true,model: model.entry[index],)),
+              ),
+              Row(
+              children: [
+                Text('GPA'),
+                Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: Text(model.getGPA()),
+                )
+              ],
+
               )
+
             ],
           ),
         );

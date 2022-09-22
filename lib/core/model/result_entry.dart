@@ -33,16 +33,16 @@ class ResultEntry {
       };
 
   String get scoreGrade {
-    if (score! > 70 && score! <= 100) {
+    if (score! >= 70 && score! <= 100) {
       return Grade.a.toEString();
   }
-    else if(score! > 60 && score! < 70){
+    else if(score! >= 60 && score! < 70){
       return Grade.b.toEString();
     }
-    else if(score!> 50 && score!< 60){
+    else if(score!>= 50 && score!< 60){
       return Grade.c.toEString();
     }
-    else if(score! > 45 && score! < 50){
+    else if(score! >= 45 && score! < 50){
       return Grade.d.toEString();
     }
     else{
@@ -61,3 +61,11 @@ extension on Grade {
     return name.toUpperCase();
   }
 }
+
+class ResultEntryBoxModel {
+  String? courseName;
+  String? grade;
+  String? courseUnit;
+  ResultEntryBoxModel({this.grade = 'A', this.courseUnit = '5', this.courseName});
+}
+

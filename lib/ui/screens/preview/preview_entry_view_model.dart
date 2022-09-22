@@ -13,4 +13,8 @@ void getEntries(){
   notifyListeners();
 }
 
+String getGPA(){
+  return _calcService.calcGPA().toStringAsFixed(2);
+}
+
 }
