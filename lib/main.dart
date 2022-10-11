@@ -1,6 +1,12 @@
+import 'package:cgpa_app/app/app_setup.locator.dart';
+import 'package:cgpa_app/ui/screens/entry/result_entry_screen.dart';
+import 'package:cgpa_app/ui/screens/onboarding.dart';
+import 'package:cgpa_app/ui/widgets/result_entry_card.dart';
 import 'package:flutter/material.dart';
-
-void main() {
+import 'package:hive_flutter/hive_flutter.dart';
+void main() async{
+  await Hive.initFlutter();
+  setupLocator();
   runApp(const MyApp());
 }
 
@@ -24,7 +30,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const ShowBoxesScreen()
     );
   }
 }
