@@ -1,4 +1,5 @@
 import 'package:cgpa_app/ui/screens/entry/result_entry_view_model.dart';
+import 'package:cgpa_app/util/color.dart';
 import 'package:flutter/material.dart';
 import '../../core/model/result_entry.dart';
 import 'c_textfield.dart';
@@ -6,85 +7,7 @@ import 'package:stacked/stacked.dart';
 
 import 'drop_down.dart';
 
-class ResultEntryCard extends StatelessWidget {
-  final ResultEntry? model;
-  final bool isPreview;
-  final void Function()? removeField;
-  final bool isHeader;
-  final void Function(String?)? onChangeCourseName;
-  final void Function(String?)? onChangeCourseScore;
-  final void Function(String?)? onChangeCourseUnit;
-  const ResultEntryCard({
-    Key? key,
-    this.removeField,
-    this.isPreview = false,
-    this.model,
-    this.isHeader = false,
-    this.onChangeCourseName,
-    this.onChangeCourseScore,
-    this.onChangeCourseUnit,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return !isPreview
-        ? Row(
-            children: [
-              Expanded(
-                flex: 2,
-                child: isHeader
-                    ? const Text('Course name')
-                    : CTextField(
-                        onChanged: onChangeCourseName,
-                        hintText: 'Course name',
-                      ),
-              ),
-              Expanded(
-                child: isHeader
-                    ? const Text('Units')
-                    : CTextField(
-                        onChanged: onChangeCourseUnit!,
-                        hintText: 'Course unit',
-                        keyboardType: TextInputType.phone,
-                      ),
-              ),
-              Expanded(
-                child: isHeader
-                    ? const Text('Score')
-                    : CTextField(
-                        onChanged: onChangeCourseScore!,
-                        hintText: 'Score',
-                        keyboardType: TextInputType.phone,
-                      ),
-              ),
-              IconButton(
-                icon: const Icon(Icons.close),
-                onPressed: removeField,
-              ),
-            ],
-          )
-        : Row(
-            children: [
-              Expanded(
-                  flex: 2,
-                  child: Text(isHeader ? 'Course Name' : model?.course ?? '-')),
-              Expanded(
-                  child: Text(
-                      isHeader ? 'Unit' : model?.courseUnit.toString() ?? '-')),
-              Expanded(
-                  child: Text(
-                      isHeader ? 'Score' : model?.score.toString() ?? '-')),
-              if (isPreview)
-                Expanded(
-                  child: Text(isHeader ? 'Grade' : model?.scoreGrade ?? '-'),
-                ),
-            ],
-          );
-  }
-}
-
-
-class CResultEntryBox extends StatelessWidget {
+class CResultEntryBox extends StatefulWidget {
   final List<String> grades;
   final List<String> units;
   final dynamic gradeValue;
@@ -106,12 +29,19 @@ class CResultEntryBox extends StatelessWidget {
       : super(key: key);
 
   @override
+  State<CResultEntryBox> createState() => _CResultEntryBoxState();
+}
+
+class _CResultEntryBoxState extends State<CResultEntryBox> {
+  Color color =  Colors.grey;
+  @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Container(
         decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey),
+          border: Border.all(color: color),
+          borderRadius: BorderRadius.circular(10),
         ),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -122,30 +52,37 @@ class CResultEntryBox extends StatelessWidget {
                   children: [
                     CTextField(
                       hintText: 'Course name',
-                      onChanged: onChangedCourseName,
+                      onChanged: widget.onChangedCourseName,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Expanded(
                             child: CDropDown(
-                          dropDownItems: grades,
-                          onChanged: onChangedGrades,
-                          dropDownValue: gradeValue,
+                          dropDownItems: widget.grades,
+                          onChanged: widget.onChangedGrades,
+                          dropDownValue: widget.gradeValue,
+                              hint: 'Grade',
                         )),
-                        const SizedBox(width: 40,),
+                        const SizedBox(
+                          width: 40,
+                        ),
                         Expanded(
                             child: CDropDown(
-                          dropDownItems: units,
-                          onChanged: onChangedUnits,
-                          dropDownValue: unitValue,
+                              hint: 'Units',
+                          dropDownItems: widget.units,
+                          onChanged: widget.onChangedUnits,
+                          dropDownValue: widget.unitValue,
                         )),
                       ],
                     ),
                   ],
                 ),
               ),
-              IconButton(onPressed: removeBox, icon: const Icon(Icons.close)),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: IconButton(onPressed: widget.removeBox, icon: const Icon(Icons.close, size: 18,)),
+              ),
             ],
           ),
         ),
@@ -154,3 +91,24 @@ class CResultEntryBox extends StatelessWidget {
   }
 }
 
+class PreviewResultCard extends StatelessWidget {
+  final ResultEntryBoxModel? model;
+  final bool isHeader;
+  const PreviewResultCard(
+      {Key? key, this.model, this.isHeader = false})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        children: [
+          Expanded(child: Text(isHeader?'Course':model?.courseName ?? '-', textAlign: TextAlign.center,style: TextStyle(fontSize: isHeader?20:14),)),
+          Expanded(child: Text(isHeader?'Unit':model?.courseUnit ?? '-', textAlign: TextAlign.center, style: TextStyle(fontSize: isHeader?20:14))),
+          Expanded(child: Text(isHeader?'Grade': model?.grade ?? '-', textAlign: TextAlign.center, style: TextStyle(fontSize: isHeader?20:14))),
+        ],
+      ),
+    );
+  }
+}

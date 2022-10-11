@@ -13,6 +13,7 @@ import 'package:stacked_services/src/navigation/navigation_service.dart';
 import 'package:stacked_services/src/snackbar/snackbar_service.dart';
 
 import '../core/services/calculation_service.dart';
+import '../core/services/local_storage_service.dart';
 
 final locator = StackedLocator.instance;
 
@@ -28,4 +29,5 @@ Future<void> setupLocator(
   locator.registerLazySingleton(() => DialogService());
   locator.registerLazySingleton(() => SnackbarService());
   locator.registerLazySingleton(() => CalculationService());
+  locator.registerLazySingleton(() => LocalStorageService());
 }

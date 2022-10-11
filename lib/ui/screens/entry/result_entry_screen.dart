@@ -1,53 +1,10 @@
 import 'package:cgpa_app/ui/screens/entry/result_entry_view_model.dart';
 import 'package:cgpa_app/ui/screens/preview/preview_result_screen.dart';
 import 'package:cgpa_app/ui/widgets/result_entry_card.dart';
+import 'package:cgpa_app/util/color.dart';
+import 'package:cgpa_app/util/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
-
-class ResultEntryScreen extends StatelessWidget {
-  const ResultEntryScreen({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return ViewModelBuilder<ResultEntryViewModel>.reactive(
-      viewModelBuilder: ()=> ResultEntryViewModel(),
-      builder: (context, model, _) {
-        return Scaffold(
-          body: Column(
-            children:  [
-              const ResultEntryCard(isPreview: false, isHeader: true,),
-              Expanded(
-                child: SizedBox(
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: List.generate(model.studentEntries.length, (index) => ResultEntryCard(
-                            onChangeCourseName: (value)=> model.onChangeCourseName(index, value),
-                        onChangeCourseScore: (value)=> model.onChangeScore(index, value),
-                        onChangeCourseUnit: (value)=> model.onChangeCourseUnit(index, value),
-                        removeField:()=> model.removeEntry(index),
-                      )),
-                    ),
-                  ),
-                ),
-              ),
-              Column(
-                children: [
-                  MaterialButton(height: 50, onPressed: ()=> model.addNewEntry(), child: const Text('Add New Entry'),),
-                  MaterialButton(height: 50, onPressed:(){
-                    model.submitEntries();
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=> PreviewEntryScreen()));
-                  }, color: Colors.blue, child: const Text('Preview Result'),)
-                ],
-              ),
-
-            ],
-          ),
-        );
-      }
-    );
-  }
-}
-
 class ShowBoxesScreen extends StatelessWidget {
   const ShowBoxesScreen({Key? key}) : super(key: key);
 
@@ -58,12 +15,14 @@ class ShowBoxesScreen extends StatelessWidget {
         builder: (context, model, _) {
           return Scaffold(
             appBar: AppBar(
-              title: const Text('GPA Calculator'),
+              title: Text('GPA Calculator', style: MyStyles.style1,),
+              backgroundColor: EColor.primaryColor,
             ),
             body: Padding(
               padding: const EdgeInsets.all(8.0),
               child: SingleChildScrollView(
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Column(
                         children: List.generate(
@@ -80,17 +39,20 @@ class ShowBoxesScreen extends StatelessWidget {
                                 removeBox: () => model.removeEntryBox(index),
                                 onChangedUnits: (value) =>
                                     model.onChangedUnits(value, index)))),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8.0),
-                      child: MaterialButton(
-                        onPressed: () => model.addNewBox(),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: SizedBox(
+                        width: 150,
+                        child: MaterialButton(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            side: BorderSide(color: Colors.grey)
                           ),
+                          onPressed: () => model.addNewBox(),
                           child: Padding(
-                            padding: const EdgeInsets.all(20.0),
+                            padding: const EdgeInsets.all(12.0),
                             child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: const [
                                 Text('Add Course'),
                                 Padding(
@@ -100,6 +62,22 @@ class ShowBoxesScreen extends StatelessWidget {
                               ],
                             ),
                           ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top:12.0),
+                      child: MaterialButton(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        onPressed: (){
+                        model.submitEntries();
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=> PreviewEntryScreen()));},
+                      color: EColor.primaryColor,
+                        child: const Padding(
+                          padding: EdgeInsets.all(12.0),
+                          child: Text('Preview Result', style: TextStyle(color: Colors.white),),
                         ),
                       ),
                     )

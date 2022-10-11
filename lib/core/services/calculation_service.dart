@@ -5,21 +5,23 @@ class CalculationService {
   int totalGradePoint = 0;
   int totalLoadUnit = 0;
 
-List<ResultEntry> entries = [];
-void setEntries(List<ResultEntry> studentEntries){
-  entries = studentEntries;
-  print(entries[0].scoreGrade);
+List<ResultEntryBoxModel> entries = [];
+void setEntries(List<ResultEntryBoxModel> boxEntries){
+  entries = boxEntries;
+  // print(entries[0].scoreGrade);
 }
 
 void calculateTotalCourseUnit(){
+  totalCourseUnit = 0;
   entries.map((e) {
-    totalCourseUnit += e.courseUnit!;
+    totalCourseUnit += int.parse(e.courseUnit!);
   }).toList();
 }
 
 void calculateTotalLoadUnit(){
+  totalLoadUnit = 0;
   entries.map((e) {
-    totalLoadUnit += (e.gradePoint!*e.courseUnit!);
+    totalLoadUnit += (e.gradePoint!*int.parse(e.courseUnit!));
   }).toList();
 }
 
@@ -37,16 +39,16 @@ double calcGPA(){
 
 void checkGrade(){
   entries.map((e) {
-    if(e.scoreGrade=='A'){
+    if(e.grade=='A'){
       e.gradePoint=5;
     }
-    else if(e.scoreGrade =='B'){
+    else if(e.grade =='B'){
       e.gradePoint = 4;
     }
-    else if(e.scoreGrade=='C'){
+    else if(e.grade=='C'){
       e.gradePoint = 3;
     }
-    else if(e.scoreGrade == 'D'){
+    else if(e.grade == 'D'){
       e.gradePoint = 2;
     }
     else{

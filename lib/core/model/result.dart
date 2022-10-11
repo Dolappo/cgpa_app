@@ -1,22 +1,20 @@
+import 'package:cgpa_app/core/model/result_entry.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+part 'result.g.dart';
+
+@HiveType(typeId: 0)
 class Result {
+  @HiveField(0)
   double? gpa;
+  @HiveField(1)
+  List<ResultEntryBoxModel>? result;
+  @HiveField(2)
   int? year;
+  @HiveField(3)
   int? semester;
+  @HiveField(4)
   String? studentName;
-  Result({this.year, this.semester, this.studentName, this.gpa});
-
-  factory Result.fromJson(Map<String, dynamic> json)=> Result(
-    year: json['year'] as int?,
-    semester: json['semester'] as int?,
-    studentName: json['studentName'] as String?,
-     gpa: json['gpa'] as double?,
-  );
-
-  Map<String, dynamic> toJson()=>{
-    'year': year,
-    'semester': semester,
-    'studentName': studentName,
-    'gpa': gpa,
-  };
-
+  @HiveField(5)
+  String? username;
+  Result({this.year, this.semester, this.studentName, this.gpa, this.result, this.username});
 }
